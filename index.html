@@ -73,6 +73,7 @@
 			height:100%;
 			-webkit-transform-style:preserve-3d;
 			/* transform-style:preserve-3d; */
+			transition:all .6s;
 		}
 
 		.photo-wrap .side-front{
@@ -84,14 +85,14 @@
 		}
 		.photo-wrap .side-back{
 			-webkit-transform:rotateY(180deg);
-/* 			   -moz-transform:rotateY(180deg);
+			/* -moz-transform:rotateY(180deg);
 				-ms-transform:rotateY(180deg);
 				 -o-transform:rotateY(180deg);
 					transform:rotateY(180deg); */
 		}
 		.photo-wrap .side{		
 			-webkit-backface-visibility:hidden;	
-/* 			   -moz-backface-visibility:hidden;
+			/* -moz-backface-visibility:hidden;
 				-ms-backface-visibility:hidden;
 					backface-visibility:hidden; */
 		}
@@ -101,7 +102,7 @@
 </head>
 <body onselectstart="return false;">
 	<div class="wrap">
-		<div class="photo photo_center"><!-- .photo负责位移、旋转 -->
+		<div class="photo photo_center photo_front" onclick="turn(this)"><!-- .photo负责位移、旋转 -->
 			<div class="photo-wrap"><!-- .photo-wrap负责3D翻转 -->
 				<div class="side side-front">
 					<p class="image"><img src="test.jpg" alt="测试"></p>
@@ -113,5 +114,19 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript" src="photo/data.js"></script>
+	<script type="text/javascript">
+	/* 1.翻面控制 */
+		function turn (elem) {
+			var cls = elem.className;
+			if ( /photo_front/.test( cls )) {
+				cls = cls.replace(/photo_front/,'photo_back')
+			} else{
+				cls = cls.replace(/photo_back/,'photo_front')
+			};
+			return elem.className = cls;
+		}
+	</script>
 </body>
 </html>
