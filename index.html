@@ -101,15 +101,15 @@
 	</style>
 </head>
 <body onselectstart="return false;">
-	<div class="wrap">
-		<div class="photo photo_center photo_front" onclick="turn(this)"><!-- .photo负责位移、旋转 -->
+	<div class="wrap" id="wrap"><!-- 2.改写视图，为模板字符串 -->
+		<div class="photo photo_center photo_front" onclick="turn(this)" id="photo_{{index}}"><!-- .photo负责位移、旋转 -->
 			<div class="photo-wrap"><!-- .photo-wrap负责3D翻转 -->
 				<div class="side side-front">
-					<p class="image"><img src="test.jpg" alt="测试"></p>
-					<p class="caption">测试图片</p>
+					<p class="image"><img src="{{img}}" alt="img"></p>
+					<p class="caption">{{caption}}</p>
 				</div>
 				<div class="side side-back">
-					<p class="desc">测试图片的描述</p>
+					<p class="desc">{{desc}}</p>
 				</div>
 			</div>
 		</div>
@@ -117,6 +117,29 @@
 
 	<script type="text/javascript" src="photo/data.js"></script>
 	<script type="text/javascript">
+	/* 3.通用函数 */
+		function g(selector){
+			var method = selector.substr(0,1) == '.' ? 'getElementsByClassName' : 'getElementById'
+			return document[method](selector.substr(1));
+		}
+	/* 4.输出所有的海报 */
+		var data = data;
+		function addPhotos(){
+			var template = g('#wrap').innerHTML;
+			var html = [];
+			for( s in data){/* for (var s = 0; s < data.length; s++) { */
+				var _html = template
+					.replace('{{index}}',s)
+					.replace('{{img}}',data[s].img)
+					.replace('{{caption}}',data[s].caption)
+					.replace('{{desc}}',data[s].desc);
+				html.push( _html );
+			}
+			g('#wrap').innerHTML = html.join('');
+
+			}
+		}
+		addPhotos();
 	/* 1.翻面控制 */
 		function turn (elem) {
 			var cls = elem.className;
