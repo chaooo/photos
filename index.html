@@ -134,6 +134,7 @@
 		function addPhotos(){
 			var template = g('#wrap').innerHTML;
 			var html = [];
+			var nav = [];
 			for( s in data){
 				var _html = template
 					.replace('{{index}}',s)
@@ -153,10 +154,11 @@
 			var photo ={w:g('.photo')[0].clientWidth,h:g('.photo')[0].clientHeight};
 			range.wrap = wrap;
 			range.photo = photo;
-
-
+			range.left.x = [0-photo.w/4 , wrap.w/2-photo.w/4];
+			range.left.y = [0-photo.h/2 , wrap.h];
+			range.right.x = [wrap.w/2+photo.w/4 , wrap.w+photo.w/4];
+			range.right.y = range.left.y;
 			return range;
-
 		}
 	/* 5.排序海报 */
 		function rsort( n ){
@@ -172,10 +174,18 @@
 			/* 把海报分为左、右区域两部分 */
 			var photos_left = photos.splice(0,photos.length/2);
 			var photos_right = photos;
+			var ranges = range();
 			for(s in photos_left){
 				var photo = photos_left[s];
-				photo.style.left = '10px';
-				photo.style.top = '10px';
+				photo.style.left = random(ranges.left.x)+'px';
+				photo.style.top = random(ranges.left.y)+'px';
+				photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg)';
+			}
+			for(s in photos_right){
+				var photo = photos_right[s];
+				photo.style.left = random(ranges.right.x)+'px';
+				photo.style.top = random(ranges.right.y)+'px';
+				photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg)';
 			}
 			console.log(photos.length,photos_left.length,photos_right.length);
 		}
