@@ -9,6 +9,10 @@ body{
 	font-family:'Avenir Next','Lantinghei SC';
 	font-size:14px;
 	-webkit-font-smoothing:antialiased;
+	   -moz-font-smoothing:antialiased;
+		-ms-font-smoothing:antialiased;
+		 -o-font-smoothing:antialiased;
+			font-smoothing:antialiased;
 }
 .wrap{
 	width:100%;
@@ -20,7 +24,9 @@ body{
 	overflow:hidden;
 	-webkit-perspective:800px;
 	   -moz-perspective:800px;
-	/* perspective:800px; */
+		-ms-perspective:800px;
+		 -o-perspective:800px;
+			perspective:800px;
 }
 .photo{
 	width:260px;
@@ -30,9 +36,14 @@ body{
 	z-index:1;
 	-webkit-box-shadow: 0 0 1px rgba(0,0,0,.01);
 	   -moz-box-shadow: 0 0 1px rgba(0,0,0,.01);
+		-ms-box-shadow: 0 0 1px rgba(0,0,0,.01);
+		 -o-box-shadow: 0 0 1px rgba(0,0,0,.01);
 	        box-shadow: 0 0 1px rgba(0,0,0,.01);
 	-webkit-transition:all .6s;
 	   -moz-transition:all .6s;
+		-ms-transition:all .6s;
+		 -o-transition:all .6s;
+			transition:all .6s;
 }
 .photo .side{
 	width:100%;
@@ -41,8 +52,10 @@ body{
 	position:absolute;top:0;right:0;
 	padding:20px;
 	-webkit-box-sizing:border-box;
-	   -moz-box-sizing:border-box; 
-			/* box-sizing:border-box; */		
+	   -moz-box-sizing:border-box;
+		-ms-box-sizing:border-box;
+		 -o-box-sizing:border-box;
+			box-sizing:border-box;		
 }
 .photo .side-front{}
 .photo .side-front .image{
@@ -77,40 +90,55 @@ body{
 	height:100%;
 	-webkit-transform-style:preserve-3d;
 	   -moz-transform-style:preserve-3d;
-	/* transform-style:preserve-3d; */
+		-ms-transform-style:preserve-3d;
+		 -o-transform-style:preserve-3d;
+			transform-style:preserve-3d;
 	-webkit-transform-origin:0% 50%;/* 优化样式 */
 	   -moz-transform-origin:0% 50%;
+		-ms-transform-origin:0% 50%;
+		 -o-transform-origin:0% 50%;
+			transform-origin:0% 50%;
 	-webkit-transition:all .6s ease-in-out;
 	   -moz-transition:all .6s ease-in-out;
+		-ms-transition:all .6s ease-in-out;
+		 -o-transition:all .6s ease-in-out;
+			transition:all .6s ease-in-out;
 }
 
 .photo-wrap .side-front{
 	-webkit-transform:rotateY(0deg);
 	   -moz-transform:rotateY(0deg);
-		/*-ms-transform:rotateY(0deg);
+		-ms-transform:rotateY(0deg);
 		 -o-transform:rotateY(0deg);
-			transform:rotateY(0deg); */	 	
+			transform:rotateY(0deg); 	
 }
 .photo-wrap .side-back{
 	-webkit-transform:rotateY(180deg);
 	   -moz-transform:rotateY(180deg);
-		/*-ms-transform:rotateY(180deg);
+		-ms-transform:rotateY(180deg);
 		 -o-transform:rotateY(180deg);
-			transform:rotateY(180deg); */
+			transform:rotateY(180deg);
 }
 .photo-wrap .side{		
 	-webkit-backface-visibility:hidden;	
 	   -moz-backface-visibility:hidden;
-		/*-ms-backface-visibility:hidden;
-			backface-visibility:hidden; */
+		-ms-backface-visibility:hidden;
+		 -o-backface-visibility:hidden;
+			backface-visibility:hidden;
 }
 .photo_front .photo-wrap{
 	-webkit-transform:translate(0px, 0px) rotateY(0deg);
 	   -moz-transform:translate(0px, 0px) rotateY(0deg);
+		-ms-transform:translate(0px, 0px) rotateY(0deg);
+		 -o-transform:translate(0px, 0px) rotateY(0deg);
+			transform:translate(0px, 0px) rotateY(0deg);
 }
 .photo_back .photo-wrap{
 	-webkit-transform:translate(260px, 0px) rotateY(180deg);
 	   -moz-transform:translate(260px, 0px) rotateY(180deg);
+		-ms-transform:translate(260px, 0px) rotateY(180deg);
+		 -o-transform:translate(260px, 0px) rotateY(180deg);
+			transform:translate(260px, 0px) rotateY(180deg);
 }
 /* 控制按钮的样式 */
 .nav{
@@ -133,8 +161,14 @@ body{
 	border-radius:50%;
 	-webkit-transform:scale(.4);
 	   -moz-transform:scale(.4);
+		-ms-transform:scale(.4);
+		 -o-transform:scale(.4);
+			transform:scale(.4);
 	-webkit-transition:all .6s;
 	   -moz-transition:all .6s;
+		-ms-transition:all .6s;
+		 -o-transition:all .6s;
+			transition:all .6s;
 }
 .nav .i:after{
 	content:"翻";
@@ -150,10 +184,16 @@ body{
 .nav .i_current{
 	-webkit-transform:scale(1);
 	   -moz-transform:scale(1);
+		-ms-transform:scale(1);
+		 -o-transform:scale(1);
+			transform:scale(1);
 }
 .nav .i_current:after{opacity:1;}
 .nav .i_back{
 	background-color:#555;
-	-webkit-transform:rotateY(-180deg);
-	   -moz-transform:rotateY(-180deg);
+	-webkit-transform:rotateY(180deg);
+	   -moz-transform:rotateY(180deg);
+		-ms-transform:rotateY(180deg);
+		 -o-transform:rotateY(180deg);
+			transform:rotateY(180deg);
 }

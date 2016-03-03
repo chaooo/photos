@@ -55,7 +55,11 @@
 			_photo[s].className += ' photo_front';
 			_photo[s].style.left='';
 			_photo[s].style.top='';
-			_photo[s].style['transform']=_photo[s].style['-webkit-transform']='rotate(360deg) scale(1.3)';
+			_photo[s].style['transform']=_photo[s].style['-webkit-transform']
+										=_photo[s].style['-moz-transform']
+										=_photo[s].style['-ms-transform']
+										=_photo[s].style['-o-transform']
+										='rotate(360deg) scale(1.3)';
 			photos.push( _photo[s] );
 		}
 		var photo_center = g('#photo_'+n);
@@ -69,13 +73,21 @@
 			var photo = photos_left[s];
 			photo.style.left = random(ranges.left.x)+'px';
 			photo.style.top = random(ranges.left.y)+'px';
-			photo.style['transform'] = photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg) scale(1)';
+			photo.style['transform']=photo.style['-webkit-transform']
+									=photo.style['-moz-transform']
+									=photo.style['-ms-transform']
+									=photo.style['-o-transform']
+									='rotate('+random([-150,150])+'deg) scale(1)';
 		}
 		for(s in photos_right){
 			var photo = photos_right[s];
 			photo.style.left = random(ranges.right.x)+'px';
 			photo.style.top = random(ranges.right.y)+'px';
-			photo.style['transform'] = photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg) scale(1)';
+			photo.style['transform']=photo.style['-webkit-transform']
+									=photo.style['-moz-transform']
+									=photo.style['-ms-transform']
+									=photo.style['-o-transform']
+									='rotate('+random([-150,150])+'deg) scale(1)';
 		}
 		/* 控制按钮处理 */
 		var navs = g('.i');
