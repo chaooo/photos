@@ -21,15 +21,20 @@
 			background-color:#333;
 			overflow:hidden;
 			-webkit-perspective:800px;
+			   -moz-perspective:800px;
 			/* perspective:800px; */
 		}
 		.photo{
 			width:260px;
 			height:320px;
 			position:absolute;
+			left:50%;top:50%;margin:-160px 0 0 -130px;/* 优化样式 */
 			z-index:1;
 			-webkit-box-shadow: 0 0 1px rgba(0,0,0,.01);
-			box-shadow: 0 0 1px rgba(0,0,0,.01);
+			   -moz-box-shadow: 0 0 1px rgba(0,0,0,.01);
+			        box-shadow: 0 0 1px rgba(0,0,0,.01);
+			-webkit-transition:all .6s;
+			   -moz-transition:all .6s;
 		}
 		.photo .side{
 			width:100%;
@@ -38,8 +43,8 @@
 			position:absolute;top:0;right:0;
 			padding:20px;
 			-webkit-box-sizing:border-box;
-			/* -moz-box-sizing:border-box; 
-					box-sizing:border-box; */		
+			   -moz-box-sizing:border-box; 
+					/* box-sizing:border-box; */		
 		}
 		.photo .side-front{}
 		.photo .side-front .image{
@@ -59,6 +64,7 @@
 			color:#666;
 			font-size:14px;
 			line-height:1.5em;
+			word-wrap:break-word;
 		}
 		/* 当前选中海报样式 */
 		.photo_center{
@@ -72,32 +78,87 @@
 			width:100%;
 			height:100%;
 			-webkit-transform-style:preserve-3d;
+			   -moz-transform-style:preserve-3d;
 			/* transform-style:preserve-3d; */
-			transition:all .6s;
+			-webkit-transform-origin:0% 50%;/* 优化样式 */
+			   -moz-transform-origin:0% 50%;
+			-webkit-transition:all .6s ease-in-out;
+			   -moz-transition:all .6s ease-in-out;
 		}
 
 		.photo-wrap .side-front{
 			-webkit-transform:rotateY(0deg);
-			/* -moz-transform:rotateY(0deg);
-				-ms-transform:rotateY(0deg);
+			   -moz-transform:rotateY(0deg);
+				/*-ms-transform:rotateY(0deg);
 				 -o-transform:rotateY(0deg);
 					transform:rotateY(0deg); */	 	
 		}
 		.photo-wrap .side-back{
 			-webkit-transform:rotateY(180deg);
-			/* -moz-transform:rotateY(180deg);
-				-ms-transform:rotateY(180deg);
+			   -moz-transform:rotateY(180deg);
+				/*-ms-transform:rotateY(180deg);
 				 -o-transform:rotateY(180deg);
 					transform:rotateY(180deg); */
 		}
 		.photo-wrap .side{		
 			-webkit-backface-visibility:hidden;	
-			/* -moz-backface-visibility:hidden;
-				-ms-backface-visibility:hidden;
+			   -moz-backface-visibility:hidden;
+				/*-ms-backface-visibility:hidden;
 					backface-visibility:hidden; */
 		}
-		.photo_front .photo-wrap{-webkit-transform:rotateY(0deg);}
-		.photo_back .photo-wrap{-webkit-transform:rotateY(180deg);}
+		.photo_front .photo-wrap{
+			-webkit-transform:translate(0px, 0px) rotateY(0deg);
+			   -moz-transform:translate(0px, 0px) rotateY(0deg);
+		}
+		.photo_back .photo-wrap{
+			-webkit-transform:translate(260px, 0px) rotateY(180deg);
+			   -moz-transform:translate(260px, 0px) rotateY(180deg);
+		}
+		/* 控制按钮的样式 */
+		.nav{
+			width:100%;
+			height:30px;
+			line-height:30px;
+			position:absolute;
+			left:0;bottom:20px;
+			z-index:999;
+			text-align:center;
+		}
+		.nav .i{
+			width:30px;
+			height:30px;
+			display:inline-block;
+			cursor:pointer;
+			text-align:center;
+			background-color:#aaa;
+			position:relative;
+			border-radius:50%;
+			-webkit-transform:scale(.4);
+			   -moz-transform:scale(.4);
+			-webkit-transition:all .6s;
+			   -moz-transition:all .6s;
+		}
+		.nav .i:after{
+			content:"翻";
+			font-size:1em;
+			text-align:center;
+			color:#FFF;
+			line-height:30px;
+			width:30px;
+			height:30px;
+			position:absolute;left:0;top:0;
+			opacity:0;
+		}
+		.nav .i_current{
+			-webkit-transform:scale(1);
+			   -moz-transform:scale(1);
+		}
+		.nav .i_current:after{opacity:1;}
+		.nav .i_back{
+			background-color:#555;
+			-webkit-transform:rotateY(-180deg);
+			   -moz-transform:rotateY(-180deg);
+		}
 	</style>
 </head>
 <body onselectstart="return false;">
@@ -135,6 +196,7 @@
 			var template = g('#wrap').innerHTML;
 			var html = [];
 			var nav = [];
+			/* 7.输出控制按钮，每一个按钮对应一个海报 */
 			for( s in data){
 				var _html = template
 					.replace('{{index}}',s)
@@ -142,11 +204,13 @@
 					.replace('{{caption}}',data[s].caption)
 					.replace('{{desc}}',data[s].desc);
 				html.push( _html );
+				nav.push('<span id="nav_'+s+'" onclick="turn( g(\'#photo_'+s+'\') )" class="i">&nbsp;</span>');
 			}
+			html.push('<div class="nav">'+nav.join('')+'</div>');
 			g('#wrap').innerHTML = html.join('');
+			rsort( random([0,data.length-1]) );
 		}
 		addPhotos();
-		rsort( random([0,data.length-1]) );
 	/* 6.计算左右分区的范围{left:{x:[min,max],y},right{}} */
 		function range(){
 			var range = {left:{x:[],y:[]} , right:{x:[],y:[]}};
@@ -166,6 +230,12 @@
 			var photos = [];
 			for (var s = 0; s < _photo.length; s++) {
 				_photo[s].className = _photo[s].className.replace(/\s*photo_center/,'');
+				_photo[s].className = _photo[s].className.replace(/\s*photo_front/,'');
+				_photo[s].className = _photo[s].className.replace(/\s*photo_back/,'');
+				_photo[s].className += ' photo_front';
+				_photo[s].style.left='';
+				_photo[s].style.top='';
+				_photo[s].style['transform']=_photo[s].style['-webkit-transform']='rotate(360deg) scale(1.3)';
 				photos.push( _photo[s] );
 			}
 			var photo_center = g('#photo_'+n);
@@ -179,23 +249,36 @@
 				var photo = photos_left[s];
 				photo.style.left = random(ranges.left.x)+'px';
 				photo.style.top = random(ranges.left.y)+'px';
-				photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg)';
+				photo.style['transform'] = photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg) scale(1)';
 			}
 			for(s in photos_right){
 				var photo = photos_right[s];
 				photo.style.left = random(ranges.right.x)+'px';
 				photo.style.top = random(ranges.right.y)+'px';
-				photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg)';
+				photo.style['transform'] = photo.style['-webkit-transform'] = 'rotate('+random([-150,150])+'deg) scale(1)';
 			}
-			console.log(photos.length,photos_left.length,photos_right.length);
+			/* 控制按钮处理 */
+			var navs = g('.i');
+			for (var s = 0; s < navs.length; s++) {
+			 	navs[s].className = navs[s].className.replace(/\s*i_current/,'');
+			 	navs[s].className = navs[s].className.replace(/\s*i_back/,'');
+			 }; 
+			g('#nav_'+n).className += ' i_current ';
+			console.log(photos_left.length,photos_right.length);
 		}
 	/* 1.翻面控制 */
 		function turn (elem) {
 			var cls = elem.className;
+			var n = elem.id.split('_')[1];
+			if ( !/photo_center/.test(cls) ) {
+				return rsort(n);
+			}
 			if ( /photo_front/.test( cls )) {
-				cls = cls.replace(/photo_front/,'photo_back')
+				cls = cls.replace(/photo_front/,'photo_back');
+				g('#nav_'+n).className += ' i_back ';
 			} else{
-				cls = cls.replace(/photo_back/,'photo_front')
+				cls = cls.replace(/photo_back/,'photo_front');
+				g('#nav_'+n).className = g('#nav_'+n).className.replace(/\s*i_back/,'');
 			};
 			return elem.className = cls;
 		}
