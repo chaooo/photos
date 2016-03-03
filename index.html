@@ -105,7 +105,7 @@
 		<div class="photo photo_center photo_front" onclick="turn(this)" id="photo_{{index}}"><!-- .photo负责位移、旋转 -->
 			<div class="photo-wrap"><!-- .photo-wrap负责3D翻转 -->
 				<div class="side side-front">
-					<p class="image"><img src="{{img}}" alt="img"></p>
+					<p class="image"><img src="photo/{{img}}" alt="img"></p>
 					<p class="caption">{{caption}}</p>
 				</div>
 				<div class="side side-back">
@@ -127,7 +127,7 @@
 		function addPhotos(){
 			var template = g('#wrap').innerHTML;
 			var html = [];
-			for( s in data){/* for (var s = 0; s < data.length; s++) { */
+			for( s in data){
 				var _html = template
 					.replace('{{index}}',s)
 					.replace('{{img}}',data[s].img)
@@ -136,8 +136,6 @@
 				html.push( _html );
 			}
 			g('#wrap').innerHTML = html.join('');
-
-			}
 		}
 		addPhotos();
 	/* 1.翻面控制 */
