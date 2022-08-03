@@ -197,3 +197,12 @@ body{
 		 -o-transform:rotateY(180deg);
 			transform:rotateY(180deg);
 }
+footer {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    margin-top: -300px;
+    padding-top: 650px;
+    padding-bottom: 50px;
+    text-align: center;
+}
